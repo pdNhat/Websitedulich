@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Try jQuery Online</title>
+<link rel= "stylesheet" type= "text/css" href ="Sumtlh.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script language="javascript">
+ 
+
+$(document).ready(function() {
+
+   $("#btnAdd").click(function(){
+       var fullname = $("#txtName").val();
+       var toan = $("#txtToan").val();
+       var ly = $("#txtLy").val();
+       var hoa = $("#txtHoa").val();
+       // cac dieu kien trong form
+       if(fullname == ""){
+        alert("Tên không được để trống.");
+        return;
+       }
+       
+       if(toan == ""){
+        alert("Điểm toán không được để trống.");
+        return;
+       }
+       if (parseFloat(toan) < 0 || parseFloat(toan) >10 ) {
+        alert("điểm toán phải là số dương bé hơn hoặc bằng 10");
+        return;
+       }
+       
+       if(ly == ""){
+        alert("Điểm lý không được để trống.");
+        return;
+       }
+       if (parseFloat(ly) < 0 || parseFloat(ly) >10) {
+        alert("điểm lý phải là số dương bé hơn hoặc bằng 10");
+        return;
+       }
+       if(hoa == ""){
+        alert("Điểm hóa không được để trống.");
+        return;
+       }
+       if (parseFloat(hoa) < 0 || parseFloat(hoa) >10 ) {
+        alert("điểm hóa phải là số dương bé hơn hoặc bằng 10");
+        return;
+       }
+       
+       var stt = $("#students tr").length +1;
+       var row = '<tr><td>' + stt +'</td><td>' + fullname +'</td> <td class="toan">' + toan +'</td> <td class="ly">' + ly +'</td> <td class="hoa">' + hoa +'</td> <td class="sum">?</td></tr>';
+       $("#students").append(row);
+       
+       // xoa form sau khi nhap
+       $("#txtName").val("");
+       $("#txtToan").val("");
+       $("#txtLy").val("");
+       $("#txtHoa").val("");
+    });
+   // tinh diem trung binh toan ly hoa
+   $("#btnSum").click(function(){
+    
+     var count = $("#students tr").length;
+     if(count > 0){
+      $("#students tr").each(function(){
+           var toan = parseFloat($(this).find(".toan").text());
+           var ly = parseFloat($(this).find(".ly").text());
+           var hoa = parseFloat($(this).find(".hoa").text());
+           var sum = ((toan + ly + hoa) / 3).toFixed(2);
+           $(this).find(".sum").html(sum);
+       });
+     }
+   });
+   // xac dinh hoc sinh goi de to mau
+   $("#good").click(function() {
+     $("#students tr").each(function(){
+           var toan = parseFloat($(this).find(".toan").text());
+           var ly = parseFloat($(this).find(".ly").text());
+           var hoa = parseFloat($(this).find(".hoa").text());
+           var sum = ((toan + ly + hoa) / 3).toFixed(2);
+          
+       
+    
+    if ( parseFloat(sum) >= 8.0) {
+     
+     $(this).addClass("addred");
+     return;
+    }
+    });
+   });
+});
+
+  
+    
+</script>
+<style>
+   th {
+      text-align: center;
+         border:1px solid black;
+   }
+</style>
+</head>
+<body>
+  <div id="nhap">
+   <h1>Class MarKsheet</h1>
+   <p>Họ tên <input type="text"  id="txtName"></p>
+   <p>Điểm toán <input type="number" id="txtToan"></p>
+   <p>Điểm lý <input type="number"  id="txtLy"></p>
+   <p>Điểm hóa <input type="number"  id="txtHoa"></p>
+   <button id="btnAdd">Nhập</button>
+ </div>
+<table>
+   <thead>
+    <tr>
+     <th>STT</th>
+     <th>Họ Tên</th>
+     <th>Toán</th>
+     <th>Lý</th>
+     <th>Hóa</th>
+     <th>ĐTB</th>
+    </tr>
+   </thead>
+   <tbody id="students">
+    
+   </tbody>
+</table>
+<div id = "addXdinh">
+  <button id="btnSum">Tinh điểm trung bình</button>
+  <button id="good">Xác định học sinh giỏi</button>
+</div>
+</body>
+</html>
